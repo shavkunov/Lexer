@@ -1,5 +1,14 @@
-import ru.spbau.shavkunov.lexer.tokens.*
-import static ru.spbau.shavkunov.lexer.tokens.TokenFactory
+package ru.spbau.shavkunov.lexer;
+
+import ru.spbau.shavkunov.lexer.tokens.*;
+
+import ru.spbau.shavkunov.lexer.tokens.words.Number;
+import ru.spbau.shavkunov.lexer.tokens.words.*;
+import ru.spbau.shavkunov.lexer.tokens.words.types.*;
+
+import static ru.spbau.shavkunov.lexer.tokens.words.types.DelimiterType.*;
+import static ru.spbau.shavkunov.lexer.tokens.words.types.KeywordType.*;
+import static ru.spbau.shavkunov.lexer.tokens.words.types.OperatorType.*;
 
 %%
 
@@ -24,7 +33,7 @@ import static ru.spbau.shavkunov.lexer.tokens.TokenFactory
         return new Keyword(yyline, yycolumn, type);
     }
 
-    private Delimiter getDelimiter(Delimiter type) {
+    private Delimiter getDelimiter(DelimiterType type) {
         return new Delimiter(yyline, yycolumn, type);
     }
 
@@ -33,11 +42,11 @@ import static ru.spbau.shavkunov.lexer.tokens.TokenFactory
     }
 
     private Number getIntegerNumber() {
-        return new Number(yyline, yycolumn, Long.parseLong(yytext().toString().replace("_", ""));
+        return new Number(yyline, yycolumn, Long.parseLong(yytext().toString().replace("_", "")));
     }
 
     private Number getDoubleNumber() {
-        return new Number(yyline, yycolumn, Double.parseDouble(yytext().toString().replace("_", ""));
+        return new Number(yyline, yycolumn, Double.parseDouble(yytext().toString().replace("_", "")));
     }
 
     private Identifier getIdentifier() {

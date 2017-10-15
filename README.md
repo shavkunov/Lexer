@@ -4,7 +4,8 @@ Parsing fictional programming language.
 
 # Build
 
-use `install.sh` script
+* use `install.sh` script in Ubuntu
+* in project directory run: `gradlew jar` with JDK installed 
 
 # Run
 

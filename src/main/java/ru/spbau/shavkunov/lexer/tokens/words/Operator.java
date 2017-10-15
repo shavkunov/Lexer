@@ -19,6 +19,21 @@ public class Operator extends Token {
 
     @Override
     protected int getLength() {
-        return type.toString().length();
+        switch (type) {
+            case G:
+            case L:
+            case DIV:
+            case MUL:
+            case MINUS:
+            case PLUS: return 1;
+            case EQ:
+            case NEQ:
+            case GEQ:
+            case AND:
+            case OR:
+            case LEQ: return 2;
+        }
+
+        return 1;
     }
 }

@@ -16,3 +16,13 @@ dependencies {
 }
 
 sourceSets.main.java.srcDirs += 'src/main/gen'
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ru.spbau.shavkunov.lexer.Main'
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

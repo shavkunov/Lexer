@@ -4,6 +4,7 @@ Parsing fictional programming language.
 
 # Build
 
+There are two options how to build:
 * use `install.sh` script in Ubuntu
 * in project directory run: `gradlew jar` with JDK installed 
 

@@ -2,16 +2,14 @@ package ru.spbau.shavkunov.lexer;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
-import ru.spbau.shavkunov.lexer.Tokenizer;
 import ru.spbau.shavkunov.lexer.tokens.Token;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class TokenizingTest {
     private @NotNull ClassLoader classLoader = getClass().getClassLoader();
@@ -20,24 +18,23 @@ public class TokenizingTest {
 
     @Test
     public void test() throws Exception {
-
-        System.out.println(tests);
-        //System.out.println(answers);
-
         for (String filename : tests.list()) {
             File test = tests.toPath().resolve(filename).toFile();
-            getTokens(test);
-        }
-    }
+            String testContent = new String(Files.readAllBytes(test.toPath()));
 
-    private void check(String test) throws IOException {
+            File answer = answers.toPath().resolve(filename.replace(".L", "")).toFile();
+            String answerContent = new String(Files.readAllBytes(answer.toPath()));
+
+            List<Token> tokens = Tokenizer.tokenize(testContent);
+            String result = Tokenizer.tokensToString(tokens);
+
+            assertEquals(result, answerContent);
+        }
     }
 
     private List<Token> getTokens(File test) throws IOException {
         String content = new String(Files.readAllBytes(test.toPath().toAbsolutePath()));
-        List<Token> tokens = Tokenizer.tokenize(content);
-        Tokenizer.printTokens(tokens);
 
-        return tokens;
+        return Tokenizer.tokenize(content);
     }
 }

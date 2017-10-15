@@ -12,6 +12,7 @@ import java.util.List;
 public class Tokenizer {
     public static @NotNull List<Token> tokenize(@NotNull String content) throws IOException {
         Lexer lexer = new Lexer(null);
+
         lexer.reset(content, 0, content.length(), 0);
 
         List<Token> tokens = new LinkedList<>();
@@ -26,8 +27,15 @@ public class Tokenizer {
     }
 
     public static void printTokens(@NotNull List<Token> tokens) {
+        System.out.println(tokensToString(tokens));
+    }
+
+    public static @NotNull String tokensToString(@NotNull List<Token> tokens) {
+        StringBuilder builder = new StringBuilder();
         for (Token token : tokens) {
-            System.out.println(token);
+            builder.append(token.toString()).append("; ");
         }
+
+        return builder.toString();
     }
 }

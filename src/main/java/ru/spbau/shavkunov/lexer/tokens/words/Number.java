@@ -1,10 +1,8 @@
 package ru.spbau.shavkunov.lexer.tokens.words;
 
-import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 import ru.spbau.shavkunov.lexer.tokens.Token;
 
-@Data
 public class Number extends Token {
     private double number;
 

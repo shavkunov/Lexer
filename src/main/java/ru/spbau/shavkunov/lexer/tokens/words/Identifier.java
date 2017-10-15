@@ -1,11 +1,8 @@
 package ru.spbau.shavkunov.lexer.tokens.words;
 
-import lombok.Data;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import ru.spbau.shavkunov.lexer.tokens.Token;
 
-@Data
 public class Identifier extends Token {
     private @NotNull String name;
 

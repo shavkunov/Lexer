@@ -5,7 +5,6 @@ import org.junit.Test;
 import ru.spbau.shavkunov.lexer.tokens.Token;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -30,11 +29,5 @@ public class TokenizingTest {
 
             assertEquals(result, answerContent);
         }
-    }
-
-    private List<Token> getTokens(File test) throws IOException {
-        String content = new String(Files.readAllBytes(test.toPath().toAbsolutePath()));
-
-        return Tokenizer.tokenize(content);
     }
 }

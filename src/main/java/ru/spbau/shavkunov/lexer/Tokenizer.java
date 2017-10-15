@@ -36,6 +36,7 @@ public class Tokenizer {
             builder.append(token.toString()).append("; ");
         }
 
+        builder.setLength(builder.length() - 1);
         return builder.toString();
     }
 }

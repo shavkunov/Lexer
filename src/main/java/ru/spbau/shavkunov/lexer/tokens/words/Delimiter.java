@@ -13,4 +13,14 @@ public class Delimiter extends Token {
         super(line, column);
         this.type = type;
     }
+
+    @Override
+    protected @NotNull String getName() {
+        return type.toString();
+    }
+
+    @Override
+    protected int getLength() {
+        return 1;
+    }
 }

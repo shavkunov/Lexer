@@ -1,4 +1,4 @@
 package ru.spbau.shavkunov.lexer;
 
-public class ParseErrorException extends Exception {
+public class ParseErrorException extends RuntimeException {
 }

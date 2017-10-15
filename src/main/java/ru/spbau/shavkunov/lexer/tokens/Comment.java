@@ -11,4 +11,19 @@ public class Comment extends Token {
         super(line, column);
         this.comment = comment;
     }
+
+    @Override
+    protected @NotNull String getName() {
+        return "Comment";
+    }
+
+    @Override
+    protected int getLength() {
+        return comment.length();
+    }
+
+    @Override
+    protected @NotNull String getContent() {
+        return comment;
+    }
 }

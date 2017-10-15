@@ -13,4 +13,14 @@ public class Keyword extends Token {
         super(line, column);
         this.type = type;
     }
+
+    @Override
+    protected @NotNull String getName() {
+        return type.toString();
+    }
+
+    @Override
+    protected int getLength() {
+        return type.toString().length();
+    }
 }

@@ -8,6 +8,6 @@ use `install.sh` script
 
 # Run
 
-`java -jar build/libs/L-lexer-1.0.jar path_to_source`
+`java -jar build/libs/lexer-1.0-SNAPSHOT.jar path_to_source`
 
 where `path_to_source` path to L language file

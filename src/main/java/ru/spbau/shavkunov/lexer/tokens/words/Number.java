@@ -6,19 +6,14 @@ import ru.spbau.shavkunov.lexer.tokens.Token;
 public class Number extends Token {
     private double number;
 
-    public Number(int line, int column, double number) {
-        super(line, column);
+    public Number(int line, int column, int length, double number) {
+        super(line, column, length);
         this.number = number;
     }
 
     @Override
     protected @NotNull String getName() {
         return "Number";
-    }
-
-    @Override
-    protected int getLength() {
-        return String.valueOf(number).length();
     }
 
     @Override

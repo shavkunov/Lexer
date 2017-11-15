@@ -23,34 +23,42 @@ import static ru.spbau.shavkunov.lexer.tokens.words.types.OperatorType.*;
     private int yyline = 0;
     private int yycolumn = 0;
 
+    public int getCurrentLine() {
+        return yyline;
+    }
+
+    public int getCurrentColumn() {
+        return yycolumn;
+    }
+
     // tokens factory
 
     private Operator getOperator(OperatorType type) {
-        return new Operator(yyline, yycolumn, type);
+        return new Operator(yyline, yycolumn, yytext().length(), type);
     }
 
     private Keyword getKeyword(KeywordType type) {
-        return new Keyword(yyline, yycolumn, type);
+        return new Keyword(yyline, yycolumn, yytext().length(), type);
     }
 
     private Delimiter getDelimiter(DelimiterType type) {
-        return new Delimiter(yyline, yycolumn, type);
+        return new Delimiter(yyline, yycolumn, yytext().length(), type);
     }
 
     private Comment getComment() {
-        return new Comment(yyline, yycolumn, yytext().toString());
+        return new Comment(yyline, yycolumn, yytext().length(), yytext().toString());
     }
 
     private Number getIntegerNumber() {
-        return new Number(yyline, yycolumn, Long.parseLong(yytext().toString().replace("_", "")));
+        return new Number(yyline, yycolumn, yytext().length(), Long.parseLong(yytext().toString().replace("_", "")));
     }
 
     private Number getDoubleNumber() {
-        return new Number(yyline, yycolumn, Double.parseDouble(yytext().toString().replace("_", "")));
+        return new Number(yyline, yycolumn, yytext().length(), Double.parseDouble(yytext().toString().replace("_", "")));
     }
 
     private Identifier getIdentifier() {
-        return new Identifier(yyline, yycolumn, yytext().toString());
+        return new Identifier(yyline, yycolumn, yytext().length(), yytext().toString());
     }
 %}
 
@@ -94,6 +102,7 @@ Double = {Digits} "." {Digits}? {ExponentPart}? | "." {Digits} {ExponentPart}? |
 "<="    { return getOperator(LEQ); }
 "&&"    { return getOperator(AND); }
 "||"    { return getOperator(OR); }
+":="    { return getOperator(ASSIGNMENT); }
 
 "if"    { return getKeyword(IF); }
 "then"  { return getKeyword(THEN); }
@@ -105,13 +114,13 @@ Double = {Digits} "." {Digits}? {ExponentPart}? | "." {Digits} {ExponentPart}? |
 "begin" { return getKeyword(BEGIN); }
 "end"   { return getKeyword(END); }
 
-"("     { return getDelimiter(SEMICOLON); }
-")"     { return getDelimiter(LEFT_PARENTHESIS); }
-";"     { return getDelimiter(RIGHT_PARENTHESIS); }
+";"     { return getDelimiter(SEMICOLON); }
+"("     { return getDelimiter(LEFT_PARENTHESIS); }
+")"     { return getDelimiter(RIGHT_PARENTHESIS); }
 
+{Identifier}    { return getIdentifier(); }
 {Comment}       { return getComment(); }
 {Integer}       { return getIntegerNumber(); }
 {Double}        { return getDoubleNumber(); }
-{Identifier}    { return getIdentifier(); }
 
-[^]     { throw new ParseErrorException(); }
+[^]     { throw new ParseErrorException(yyline, yycolumn); }

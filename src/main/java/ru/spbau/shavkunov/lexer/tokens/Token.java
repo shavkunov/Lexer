@@ -6,14 +6,15 @@ import org.jetbrains.annotations.Nullable;
 public abstract class Token {
     protected final int line;
     protected final int column;
+    protected final int length;
 
-    public Token(int line, int column) {
+    public Token(int line, int column, int length) {
         this.line = line;
         this.column = column;
+        this.length = length;
     }
 
     protected @NotNull abstract String getName();
-    protected abstract int getLength();
     protected @Nullable String getContent() {
         return null;
     }
@@ -22,11 +23,11 @@ public abstract class Token {
     public @NotNull String toString() {
         String coordinates = line + "";
 
-        if (getLength() > 1) {
-            int rightBorder = column + getLength() - 1;
+        if (length > 1) {
+            int rightBorder = column + length - 1;
             coordinates += ", [" + column + ":" + rightBorder + "]";
         } else {
-            coordinates += column;
+            coordinates += ", " + column;
         }
 
         if (getContent() != null) {
@@ -34,5 +35,17 @@ public abstract class Token {
         }
 
         return getName() + "(" + coordinates + ")";
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public int getLine() {
+        return line;
     }
 }

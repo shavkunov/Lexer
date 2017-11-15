@@ -58,8 +58,8 @@ class Lexer {
 
   /* The ZZ_CMAP_A table has 256 entries */
   static final char ZZ_CMAP_A[] = zzUnpackCMap(
-    "\11\0\1\2\1\1\1\0\1\2\1\1\22\0\1\2\1\20\3\0\1\16\1\23\1\0\1\43\1\44\1\15\1"+
-    "\10\1\0\1\11\1\14\1\7\1\4\11\5\1\0\1\45\1\22\1\17\1\21\6\0\1\12\31\0\1\6\1"+
+    "\11\0\1\2\1\1\1\0\1\2\1\1\22\0\1\2\1\20\3\0\1\16\1\23\1\0\1\44\1\45\1\15\1"+
+    "\10\1\0\1\11\1\14\1\7\1\4\11\5\1\0\1\43\1\22\1\17\1\21\6\0\1\12\31\0\1\6\1"+
     "\0\1\40\1\41\1\3\1\35\1\13\1\26\1\42\1\30\1\25\2\3\1\32\1\3\1\31\1\36\2\3"+
     "\1\37\1\33\1\27\2\3\1\34\3\3\1\0\1\24\203\0");
 
@@ -277,34 +277,42 @@ class Lexer {
     private int yyline = 0;
     private int yycolumn = 0;
 
+    public int getCurrentLine() {
+        return yyline;
+    }
+
+    public int getCurrentColumn() {
+        return yycolumn;
+    }
+
     // tokens factory
 
     private Operator getOperator(OperatorType type) {
-        return new Operator(yyline, yycolumn, type);
+        return new Operator(yyline, yycolumn, yytext().length(), type);
     }
 
     private Keyword getKeyword(KeywordType type) {
-        return new Keyword(yyline, yycolumn, type);
+        return new Keyword(yyline, yycolumn, yytext().length(), type);
     }
 
     private Delimiter getDelimiter(DelimiterType type) {
-        return new Delimiter(yyline, yycolumn, type);
+        return new Delimiter(yyline, yycolumn, yytext().length(), type);
     }
 
     private Comment getComment() {
-        return new Comment(yyline, yycolumn, yytext().toString());
+        return new Comment(yyline, yycolumn, yytext().length(), yytext().toString());
     }
 
     private Number getIntegerNumber() {
-        return new Number(yyline, yycolumn, Long.parseLong(yytext().toString().replace("_", "")));
+        return new Number(yyline, yycolumn, yytext().length(), Long.parseLong(yytext().toString().replace("_", "")));
     }
 
     private Number getDoubleNumber() {
-        return new Number(yyline, yycolumn, Double.parseDouble(yytext().toString().replace("_", "")));
+        return new Number(yyline, yycolumn, yytext().length(), Double.parseDouble(yytext().toString().replace("_", "")));
     }
 
     private Identifier getIdentifier() {
-        return new Identifier(yyline, yycolumn, yytext().toString());
+        return new Identifier(yyline, yycolumn, yytext().length(), yytext().toString());
     }
 
 
@@ -609,7 +617,7 @@ class Lexer {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { throw new ParseErrorException();
+            { throw new ParseErrorException(yyline, yycolumn);
             }
           case 32: break;
           case 2: 

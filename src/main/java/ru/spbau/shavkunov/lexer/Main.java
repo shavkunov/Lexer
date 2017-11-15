@@ -16,7 +16,12 @@ public class Main {
 
         File file = new File(args[0]);
         String content = new String(Files.readAllBytes(file.toPath()));
-        List<Token> tokens = Tokenizer.tokenize(content);
-        Tokenizer.printTokens(tokens);
+        try {
+            List<Token> tokens = Tokenizer.tokenize(content);
+            Tokenizer.printTokens(tokens);
+        } catch (ParseErrorException e) {
+            System.out.println("There is a problem in " +
+                                "line "  + e.getLine() + ", " + "column " + e.getColumn());
+        }
     }
 }

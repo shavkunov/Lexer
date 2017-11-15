@@ -6,14 +6,9 @@ import ru.spbau.shavkunov.lexer.tokens.Token;
 public class Identifier extends Token {
     private @NotNull String name;
 
-    public Identifier(int line, int column, @NotNull String name) {
-        super(line, column);
+    public Identifier(int line, int column, int length, @NotNull String name) {
+        super(line, column, length);
         this.name = name;
-    }
-
-    @Override
-    protected int getLength() {
-        return name.length();
     }
 
     @Override

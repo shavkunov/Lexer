@@ -27,7 +27,7 @@ public class TokenizingTest {
             List<Token> tokens = Tokenizer.tokenize(testContent);
             String result = Tokenizer.tokensToString(tokens);
 
-            assertEquals(result, answerContent);
+            assertEquals(answerContent, result);
         }
     }
 }
